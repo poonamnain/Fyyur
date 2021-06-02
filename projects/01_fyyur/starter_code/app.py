@@ -16,7 +16,7 @@ from flask_migrate import Migrate
 from flask_wtf import Form
 
 from forms import *
-from models.model import db, Artist, Venue, Show
+from models import db, Artist, Venue, Show
 
 #----------------------------------------------------------------------------#
 # App Config.
