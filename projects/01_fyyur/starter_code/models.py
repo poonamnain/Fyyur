@@ -24,6 +24,7 @@ class Artist(db.Model):
 
     venues = db.relationship('Venue', secondary='shows')
     shows = db.relationship('Show', backref=('artists'))
+    # artist and shows relationship
 
     def to_dict(self):
         """ Returns a dictinary of artists """
@@ -64,6 +65,7 @@ class Venue(db.Model):
 
     artists = db.relationship('Artist', secondary='shows')
     shows = db.relationship('Show', backref=('venues'))
+    # Venue and shows relationship
 
     def to_dict(self):
         """ Returns a dictinary of venues """
