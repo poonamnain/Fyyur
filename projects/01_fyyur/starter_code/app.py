@@ -33,8 +33,8 @@ SQLALCHEMY_DATABASE_URI = 'postgres://poonam@localhost:5432/fyyurdb'
 
 # TODO: connect to a local postgresql database (fyyurdb)
 #----------------------------------------------------------------------------#
-# Moved all the class models to a separate model.py file
-# Added Show model in model.py
+# Moved all the class models to a separate models.py file
+# Added Show model in models.py
 #----------------------------------------------------------------------------#
 
 # TODO: implement any missing fields, as a database migration using Flask-Migrate
@@ -115,9 +115,8 @@ def artists():
 
 @app.route('/artists/<int:artist_id>')
 def show_artist(artist_id):
-    # shows the artist page with the given venue_id
+    # shows the artist page with the given artist_id
     artist = Artist.query.get(artist_id)
-
     past_shows = list(filter(lambda x: x.start_time <
                              datetime.today(), artist.shows))
     upcoming_shows = list(filter(lambda x: x.start_time >=
@@ -234,7 +233,6 @@ def create_venue_submission():
 @app.route('/venues')
 def venues():
     venues = Venue.query.order_by(Venue.state, Venue.city).all()
-
     data = []
     tmp = {}
     prev_city = None
@@ -243,8 +241,7 @@ def venues():
         venue_data = {
             'id': venue.id,
             'name': venue.name,
-            'num_upcoming_shows': len(list(filter(lambda x: x.start_time > datetime.today(),
-                                                  venue.shows)))
+            'num_upcoming_shows': len(list(filter(lambda x: x.start_time > datetime.today(), venue.shows)))
         }
         if venue.city == prev_city and venue.state == prev_state:
             tmp['venues'].append(venue_data)
