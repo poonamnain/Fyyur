@@ -16,7 +16,7 @@ from flask_migrate import Migrate
 from flask_wtf import Form
 
 from forms import *
-from models import Artist, Venue, Show
+from models.model import db, Artist, Venue, Show
 
 #----------------------------------------------------------------------------#
 # App Config.
@@ -25,10 +25,11 @@ from models import Artist, Venue, Show
 app = Flask(__name__)
 moment = Moment(app)
 app.config.from_object('config')
-db = SQLAlchemy(app)
+#db = SQLAlchemy(app)
 
 db.init_app(app)
 migrate = Migrate(app, db)
+SQLALCHEMY_DATABASE_URI = 'postgres://poonam@localhost:5432/fyyurdb'
 
 # TODO: connect to a local postgresql database (fyyurdb)
 #----------------------------------------------------------------------------#
