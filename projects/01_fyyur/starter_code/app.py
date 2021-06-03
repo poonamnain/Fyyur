@@ -23,15 +23,15 @@ from models import db, Artist, Venue, Show
 #----------------------------------------------------------------------------#
 
 app = Flask(__name__)
-moment = Moment(app)
 app.config.from_object('config')
-#db = SQLAlchemy(app)
-
 db.init_app(app)
-migrate = Migrate(app, db)
+
+moment = Moment(app)  # Timestamp
+migrate = Migrate(app, db) # Helps generate migration files
+
 SQLALCHEMY_DATABASE_URI = 'postgres://poonam@localhost:5432/fyyurdb'
 
-# TODO: connect to a local postgresql database (fyyurdb)
+# TODO: connect to a local postgresql database (db)
 #----------------------------------------------------------------------------#
 # Moved all the class models to a separate models.py file
 # Added Show model in models.py
@@ -43,7 +43,6 @@ SQLALCHEMY_DATABASE_URI = 'postgres://poonam@localhost:5432/fyyurdb'
 #----------------------------------------------------------------------------#
 # Filters.
 #----------------------------------------------------------------------------#
-
 
 def format_datetime(value, format='medium'):
     date = dateutil.parser.parse(value)
@@ -64,7 +63,9 @@ def index():
     return render_template('pages/home.html')
 pass
 
-# Artist class functions
+#----------------------------------------------------------------------------#
+# Artist
+#----------------------------------------------------------------------------#
 # Create Artist
 
 @app.route('/artists/create', methods=['GET'])
@@ -190,8 +191,9 @@ def search_artists():
                            search_term=request.form.get('search_term', ''))
 
 
-#  Venues
-#  ----------------------------------------------------------------
+#----------------------------------------------------------------------------#
+# Venue
+#----------------------------------------------------------------------------#
 # Create Venue
 
 @app.route('/venues/create', methods=['GET'])
@@ -338,9 +340,10 @@ def edit_venue_submission(venue_id):
                   ' was successfully updated!')
     return redirect(url_for('show_venue', venue_id=venue_id))
 
-# Shows class functions
-#------------------------------------------------------------------
-# List of the shows
+#----------------------------------------------------------------------------#
+# Show
+#----------------------------------------------------------------------------#
+# List of shows
 
 @app.route('/shows')
 def shows():
